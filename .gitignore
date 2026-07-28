@@ -1,0 +1,12 @@
+results/
+node_modules/
+__pycache__/
+*.pyc
+.Python
+.venv/
+venv/
+.env
+.env.*
+Data/Credentials.local.csv
+.DS_Store
+*.log

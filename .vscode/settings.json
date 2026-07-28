@@ -1,0 +1,13 @@
+{
+  "files.associations": {
+    "*.robot": "robotframework"
+  },
+  "robot.language-server.python": "${workspaceFolder}/.venv/bin/python",
+  "robot.python.executable": "${workspaceFolder}/.venv/bin/python",
+  "robot.pythonpath": [
+    "${workspaceFolder}",
+    "${workspaceFolder}/Resources",
+    "${workspaceFolder}/Resources/PO",
+    "${workspaceFolder}/Resources/Modules"
+  ]
+}

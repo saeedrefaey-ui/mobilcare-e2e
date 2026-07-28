@@ -1,0 +1,19 @@
+{
+  "name": "mobilcare-e2e",
+  "private": true,
+  "description": "MobilCare Robot Framework + Appium automation",
+  "scripts": {
+    "appium": "bash scripts/start_appium.sh",
+    "appium:doctor": "appium driver doctor uiautomator2",
+    "setup": "bash scripts/setup.sh",
+    "test": "bash run_tests.sh",
+    "test:smoke": "bash run_tests.sh Test/mobilcare.robot",
+    "setup:appium": "appium driver install uiautomator2@3.8.2",
+    "postinstall": "appium driver install uiautomator2@3.8.2 || true"
+  },
+  "devDependencies": {
+    "appium": "^2.19.0",
+    "appium-uiautomator2-driver": "^3.8.2",
+    "uiautomator2": "^1.0.2"
+  }
+}
