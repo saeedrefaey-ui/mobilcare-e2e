@@ -1,11 +1,14 @@
 *** Settings ***
 Documentation    Splash error screen — network failure after cold start (SplashErrorActivity).
-Resource    ../Common.robot
+Resource    ../../Common/BasePage.robot
+Resource    ../../Common/setup_teardown.robot
+
 
 *** Variables ***
 ${LBL_NO_NETWORK}    -android uiautomator:new UiSelector().textContains("network")
 ${LBL_CONNECTION_DETAILS}    -android uiautomator:new UiSelector().textContains("check your network")
 ${BTN_RETRY}    -android uiautomator:new UiSelector().text("Retry")
+
 
 *** Keywords ***
 Splash Error Screen Should Be Visible

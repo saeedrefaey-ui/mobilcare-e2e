@@ -1,15 +1,15 @@
 *** Settings ***
 Documentation    Fleet Owner Registration — flow ID 1 from regression sheet (Arabic path).
-Resource    ../PO/SplashError.robot
-Resource    ../PO/Onboarding.robot
-Resource    ../PO/Login.robot
-Resource    ../PO/Verification.robot
-Resource    ../PO/Terms.robot
-Resource    ../PO/RoleSelection.robot
-Resource    ../PO/Name.robot
-Resource    ../PO/Tutorial.robot
-Resource    ../Common.robot
-Resource    ../DataManager.robot
+Resource    AuthenticationKeywords.robot
+Resource    ../Pages/Authentication/LoginPage.robot
+Resource    ../Pages/Authentication/VerificationPage.robot
+Resource    ../Pages/Authentication/TermsPage.robot
+Resource    ../Pages/Authentication/RoleSelectionPage.robot
+Resource    ../Pages/Authentication/NamePage.robot
+Resource    ../Pages/Authentication/TutorialPage.robot
+Resource    ../Common/language_keywords.robot
+Resource    ../Common/data_manager.robot
+
 
 *** Keywords ***
 Complete Fleet Owner Registration Flow
@@ -25,11 +25,4 @@ Complete Fleet Owner Registration Flow
     Complete Terms With Privacy And Conditions Review
     Select Fleet Owner Role And Confirm
     Enter Display Name And Confirm    ${display_name}
-    Mobilawy Tutorial First Step Should Be Visible
-
-Reach Login Screen
-    [Documentation]    Steps 1–2 — splash then skip onboarding to sign-in.
-    Ensure MobilCare Is Foreground
-    Dismiss Splash Error If Shown
-    Skip Onboarding If Shown
-    Login Screen Should Be Visible
+    Complete Post Registration Onboarding

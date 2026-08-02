@@ -2,8 +2,9 @@
 Documentation    Fleet Owner Registration — flow ID 1 from regression sheet.
 Suite Setup       Begin All Tests
 Suite Teardown    End All Tests
-Resource    ../Resources/Common.robot
-Resource    ../Resources/Modules/FleetOwnerRegistrationKeywords.robot
+Resource    ../../Resources/Common/setup_teardown.robot
+Resource    ../../Resources/Modules/FleetOwnerRegistrationKeywords.robot
+
 
 *** Test Cases ***
 Verify Fleet Owner Registration Flow In Arabic

@@ -1,3 +1,4 @@
+Results/
 results/
 node_modules/
 __pycache__/
@@ -7,6 +8,6 @@ __pycache__/
 venv/
 .env
 .env.*
-Data/Credentials.local.csv
+Utilities/Data/Credentials.local.csv
 .DS_Store
 *.log

@@ -1,10 +1,13 @@
 *** Settings ***
 Documentation    Privacy / terms WebView detail screens from terms acceptance.
-Resource    ../Common.robot
+Resource    ../../Common/BasePage.robot
+Resource    ../../Common/setup_teardown.robot
+
 
 *** Variables ***
 ${BTN_BACK}    accessibility_id=Navigate up
 ${BTN_BACK_XPATH}    xpath=//*[@content-desc="Navigate up" or @content-desc="Back"]
+
 
 *** Keywords ***
 Agreement Screen Should Be Open

@@ -10,10 +10,10 @@ source .venv/bin/activate
 # shellcheck disable=SC1091
 source scripts/env.sh
 
-SUITE="${1:-Test/}"
+SUITE="${1:-Tests/}"
 EXTRA_ARGS=("${@:2}")
 
-mkdir -p results
+mkdir -p Results
 
-echo "==> Running: robot -d results ${SUITE} ${EXTRA_ARGS[*]:-}"
-robot -d results "$SUITE" "${EXTRA_ARGS[@]}"
+echo "==> Running: robot -d Results ${EXTRA_ARGS[*]:-} ${SUITE}"
+robot -d Results "${EXTRA_ARGS[@]}" "$SUITE"

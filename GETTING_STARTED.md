@@ -12,9 +12,7 @@ Android end-to-end tests for the **MobilCare** app (fleet owner, driver, single 
 
 - **Robot Framework** — test runner and keywords
 - **AppiumLibrary** — controls the app on emulator/device
-- **Page Object Model (POM)** — UI locators and screen actions live in `Resources/PO/`; tests only call business keywords
-
-
+- **4-layer architecture** — Tests → Modules → Pages → Common/Variables
 
 ---
 
@@ -22,17 +20,18 @@ Android end-to-end tests for the **MobilCare** app (fleet owner, driver, single 
 
 ```
 CV_Auto/
-├── Test/                          ← Test suites (what you run)
+├── Tests/                         ← Test suites (what you run)
+│   ├── Authentication/
+│   └── Registration/
 ├── Resources/
-│   ├── Common.robot               ← Appium open/close, shared waits
-│   ├── DataManager.robot          ← Reads CSV test data
-│   ├── PO/                        ← One file per screen (locators + taps)
+│   ├── Common/                    ← BasePage, setup/teardown, language, data
+│   ├── Pages/                     ← One file per screen (locators + taps)
 │   ├── Modules/                   ← Business flows (multi-screen steps)
-│   └── Variables/                 ← Appium caps + dev/stg package ids
-├── Data/Credentials.csv           ← Phones, OTP, names (placeholders)
+│   └── Variables/                 ← Caps, global vars, env overrides
+├── Libraries/CSV.py               ← Python CSV helper
+├── Utilities/Data/Credentials.csv ← Phones, OTP, names (placeholders)
 ├── scripts/                       ← Setup, Appium, Android env
 ├── run_tests.sh                   ← Run Robot suites
- (reference)
 └── .cursor/rules/                 ← Robo Builder agent + project profile
 ```
 
@@ -40,21 +39,21 @@ CV_Auto/
 
 | File | What it does | Needs real device? |
 |------|----------------|-------------------|
-| `Test/mobilcare.robot` | Smoke — reach login screen after splash | Yes |
-| `Test/fleet_owner_registration.robot` | **Full Fleet Owner registration** (16 steps, Arabic path) | Yes |
-| `Test/authentication.robot` | Sign-in flows for fleet owner, driver, single owner | Yes |
+| `Tests/Authentication/mobilcare.robot` | Smoke — reach login screen after splash | Yes |
+| `Tests/Registration/fleet_owner_registration.robot` | Full Fleet Owner registration (16 steps, Arabic path) | Yes |
+| `Tests/Authentication/authentication.robot` | Sign-in flows for fleet owner, driver, single owner | Yes |
 
 ### Main registration flow (implemented)
 
-`Test/fleet_owner_registration.robot` runs:
+`Tests/Registration/fleet_owner_registration.robot` runs:
 
-1. Open app → skip onboarding  
-2. Switch to **Arabic** (عربي)  
-3. Login with phone → OTP (`12345`) → Submit  
-4. Open Privacy Policy & Terms, check boxes, Accept  
-5. Select **Fleet Owner** → confirm dialog  
-6. Enter name → Confirm  
-7. Assert **Mobilawy Points** tutorial appears  
+1. Open app → skip onboarding
+2. Switch to **Arabic** (عربي)
+3. Login with phone → OTP (`12345`) → Submit
+4. Open Privacy Policy & Terms, check boxes, Accept
+5. Select **Fleet Owner** → confirm dialog
+6. Enter name → Confirm
+7. Assert **Mobilawy Points** tutorial appears
 
 Logic lives in `Resources/Modules/FleetOwnerRegistrationKeywords.robot` → keyword **`Complete Fleet Owner Registration Flow`**.
 
@@ -68,7 +67,7 @@ You need:
 2. **Android SDK** (Android Studio is easiest) — emulator or USB device
 3. **MobilCare APK** installed on that device (dev flavor: `com.trianglz.mobil_care.dev`)
 4. **Appium** server running on `http://127.0.0.1:4723`
-5. **Real test data** in `Data/Credentials.csv` (placeholders will not pass on a real device)
+5. **Real test data** in `Utilities/Data/Credentials.csv` (placeholders will not pass on a real device)
 
 Optional: install the [Robot Framework Language Server](https://marketplace.visualstudio.com/items?itemName=robocorp.robotframework-lsp) extension in Cursor for `.robot` syntax highlighting.
 
@@ -84,8 +83,6 @@ bash scripts/setup.sh
 
 This creates `.venv/` (Robot + AppiumLibrary), installs npm Appium locally, and installs the UiAutomator2 driver.
 
-For Cursor highlighting, the repo already includes `.vscode/settings.json` pointing at `.venv/bin/python`.
-
 ---
 
 ## How to run tests
@@ -96,8 +93,6 @@ For Cursor highlighting, the repo already includes `.vscode/settings.json` point
 source scripts/env.sh
 adb devices
 ```
-
-You should see one device listed.
 
 ### 2. Start Appium (terminal 1)
 
@@ -111,30 +106,30 @@ You should see one device listed.
 source .venv/bin/activate
 
 # Smoke only
-./run_tests.sh Test/mobilcare.robot
+./run_tests.sh Tests/Authentication/mobilcare.robot
 
-# Fleet Owner registration (your main flow)
-./run_tests.sh Test/fleet_owner_registration.robot
+# Fleet Owner registration (main flow)
+./run_tests.sh Tests/Registration/fleet_owner_registration.robot
 
 # All tests
-./run_tests.sh Test/
+./run_tests.sh Tests/
 ```
 
-Results (log, report, screenshots) go to **`results/`**.
+Results (log, report, screenshots) go to **`Results/`**.
 
 ### Override app package (e.g. staging)
 
 ```bash
-./run_tests.sh Test/ -v APP_PACKAGE:com.trianglz.mobil_care.stg
+./run_tests.sh Tests/ -v APP_PACKAGE:com.trianglz.mobil_care.stg
 ```
 
-Default caps are in `Resources/Variables/capabilities/android_caps.robot`.
+Default caps are in `Resources/Variables/android_caps.robot`.
 
 ---
 
 ## Test data
 
-Edit **`Data/Credentials.csv`** with real values for your environment:
+Edit **`Utilities/Data/Credentials.csv`** with real values for your environment:
 
 | Column | Used for |
 |--------|----------|
@@ -143,7 +138,7 @@ Edit **`Data/Credentials.csv`** with real values for your environment:
 | `otp_hint` | OTP code (app expects **5 digits**; sheet uses `12345`) |
 | `display_name` | Name on registration screen |
 
-Do not commit real credentials. For local-only secrets you can use `Data/Credentials.local.csv` (gitignored) and point `DataManager.robot` at it later if needed.
+Do not commit real credentials. For local-only secrets use `Utilities/Data/Credentials.local.csv` (gitignored).
 
 ---
 
@@ -151,10 +146,10 @@ Do not commit real credentials. For local-only secrets you can use `Data/Credent
 
 | Layer | Folder | Rule |
 |-------|--------|------|
-| Tests | `Test/` | Call module keywords only; no locators |
-| Business flows | `Resources/Modules/` | Combine PO steps (login + OTP + terms + …) |
-| Screens | `Resources/PO/` | Locators + single-screen actions only |
-| Shared | `Resources/Common.robot` | Appium session, waits |
+| Tests | `Tests/` | Call module keywords only; no locators |
+| Business flows | `Resources/Modules/` | Combine page steps (login + OTP + terms + …) |
+| Screens | `Resources/Pages/` | Locators + single-screen actions only |
+| Shared | `Resources/Common/` | Appium session, waits, language, data |
 
 **Example:** a test file should look like:
 
@@ -162,7 +157,7 @@ Do not commit real credentials. For local-only secrets you can use `Data/Credent
 Complete Fleet Owner Registration Flow
 ```
 
-Not raw `Click Element` or `${BTN_CONFIRM}` in `Test/`.
+Not raw `Click Element` or `${BTN_CONFIRM}` in `Tests/`.
 
 ---
 
@@ -172,8 +167,6 @@ To generate or extend tests from regression sheets:
 
 - Agent: `.cursor/rules/robo-builder.mdc`
 - Project rules: `.cursor/rules/customization/PROJECT_PROFILE.md`
-
-Copy from `PROJECT_PROFILE.example.md` if `PROJECT_PROFILE.md` is missing.
 
 ---
 
@@ -185,16 +178,15 @@ Copy from `PROJECT_PROFILE.example.md` if `PROJECT_PROFILE.md` is missing.
 | `ANDROID_HOME` error | Run `source scripts/env.sh` or install Android SDK |
 | No device in `adb devices` | Start emulator or plug in phone with USB debugging |
 | Appium connection refused | Run `./scripts/start_appium.sh` |
-| Tests fail on login/OTP | Update `Data/Credentials.csv` with valid phone and OTP |
+| Tests fail on login/OTP | Update `Utilities/Data/Credentials.csv` with valid phone and OTP |
 | Wrong app opens | Match `APP_PACKAGE` to installed APK flavor (dev/stg) |
 
 ---
 
 ## What is not done yet
 
-- Driver / single-owner **registration** suites matching a full sheet (only generic sign-in in `authentication.robot`)
+- Driver / single-owner **registration** suites matching a full sheet
 - Fleet owner **post-login** features (vehicles, drivers, trips, …)
 - CI pipeline
-- Locators may need tuning from live Appium page source (Compose UI)
 
 Use **`README.md`** for structure conventions and **`GETTING_STARTED.md`** (this file) for day-to-day usage.

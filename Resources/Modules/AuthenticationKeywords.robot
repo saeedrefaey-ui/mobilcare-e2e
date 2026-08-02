@@ -1,16 +1,17 @@
 *** Settings ***
 Documentation    Authentication business flows — splash, onboarding, login, OTP, terms, role, name.
 Library    Collections
-Resource    ../PO/SplashError.robot
-Resource    ../PO/Login.robot
-Resource    ../PO/Onboarding.robot
-Resource    ../PO/Verification.robot
-Resource    ../PO/Terms.robot
-Resource    ../PO/RoleSelection.robot
-Resource    ../PO/Name.robot
-Resource    ../PO/Home.robot
-Resource    ../Common.robot
-Resource    ../DataManager.robot
+Resource    ../Pages/Authentication/SplashErrorPage.robot
+Resource    ../Pages/Authentication/LoginPage.robot
+Resource    ../Pages/Authentication/OnboardingPage.robot
+Resource    ../Pages/Authentication/VerificationPage.robot
+Resource    ../Pages/Authentication/TermsPage.robot
+Resource    ../Pages/Authentication/RoleSelectionPage.robot
+Resource    ../Pages/Authentication/NamePage.robot
+Resource    ../Pages/Home/HomePage.robot
+Resource    ../Common/setup_teardown.robot
+Resource    ../Common/data_manager.robot
+
 
 *** Keywords ***
 Reach Login Screen
