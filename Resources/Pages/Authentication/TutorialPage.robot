@@ -50,3 +50,12 @@ Complete Post Registration Onboarding
     Allow Notification Permission If Shown
     Dismiss Registration Tutorial Video If Shown
     Mobilawy Tutorial First Step Should Be Visible
+
+Complete Post Registration Onboarding For Persona
+    [Documentation]    Post name-submit prompts; Mobilawy spotlight asserted for fleet_owner when enabled.
+    [Arguments]    ${persona}
+    Allow Notification Permission If Shown
+    Dismiss Registration Tutorial Video If Shown
+    IF    '${persona}' == 'fleet_owner'
+        Mobilawy Tutorial First Step Should Be Visible
+    END

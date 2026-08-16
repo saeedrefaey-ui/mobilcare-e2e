@@ -14,3 +14,20 @@ ${lang}            en
 &{ROLE_DRIVER}         en=Driver               ar=سائق فى اسطول
 &{ROLE_SINGLE_OWNER}   en=Single Owner         ar=سائق حر
 &{SELECT_ROLE_TITLE}   en=Select your account type    ar=اختار نوع حسابك
+&{TAB_HOME}            en=Home                   ar=الرئيسية
+&{TAB_FLEET}           en=Fleet                  ar=الاسطول
+&{LBL_ADD_VEHICLE}     en=Add vehicle            ar=ضيف عربية
+&{LBL_START_ADD_VEHICLE}    en=Start now, and add a vehicle    ar=يلا ابدأ و ضيف عربية
+&{LBL_LICENSE_PLATE}   en=License plate number   ar=نمرة العربية
+&{LBL_VEHICLE_NAME}    en=Vehicle Name           ar=نمرة العربية
+&{LBL_CURRENT_MILEAGE}    en=Current Mileage     ar=كيلومتر العداد
+&{LBL_VEHICLE_BRAND}   en=Vehicle Brand          ar=ماركة العربية
+&{LBL_VEHICLE_TYPE}    en=Vehicle Type           ar=نوع العربية
+&{LBL_SELECT_FROM_MENU}    en=Select from menu    ar=اختار من القائمة
+&{TAB_FLEET_VEHICLES}    en=Vehicles             ar=عربيات
+&{TAB_FLEET_TEAM}    en=Team                     ar=الفريق
+&{BTN_SAVE}            en=Save                     ar=حفظ
+&{BTN_SKIP}            en=Skip                     ar=تخطى
+&{BTN_NEXT}            en=Next                     ar=التالي
+&{LBL_ADD_DRIVER_TUTORIAL_HEADER}    en=Create your own team    ar=كوّن فريقك
+&{LBL_TEAM_TAB_TUTORIAL_HEADER}    en=Add Team Members    ar=ضيف فريق السواقين

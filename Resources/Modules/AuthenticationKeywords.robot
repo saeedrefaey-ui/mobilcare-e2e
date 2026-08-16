@@ -1,6 +1,6 @@
 *** Settings ***
 Documentation    Authentication business flows — splash, onboarding, login, OTP, terms, role, name.
-Library    Collections
+Resource    LoginKeywords.robot
 Resource    ../Pages/Authentication/SplashErrorPage.robot
 Resource    ../Pages/Authentication/LoginPage.robot
 Resource    ../Pages/Authentication/OnboardingPage.robot
@@ -14,11 +14,10 @@ Resource    ../Common/data_manager.robot
 
 
 *** Keywords ***
-Reach Login Screen
-    [Documentation]    Splash → optional error retry → onboarding skip → Sign in screen.
-    Dismiss Splash Error If Shown
-    Skip Onboarding If Shown
-    Login Screen Should Be Visible
+Sign In As Persona And Reach Home
+    [Documentation]    Registered user login — phone, OTP, persona home (see LoginKeywords).
+    [Arguments]    ${persona}    ${language}=en
+    Complete Login Flow For Persona    ${persona}    language=${language}
 
 Sign In With Phone Number
     [Documentation]    Enters phone on login screen and submits Confirm.
@@ -26,31 +25,14 @@ Sign In With Phone Number
     Login Screen Should Be Visible
     Enter Phone Number And Tap Confirm    ${phone}
 
-Get Role Label For Persona
-    [Documentation]    Maps Credentials.csv ``persona`` to role card label on screen (EN).
-    [Arguments]    ${persona}
-    ${labels}=    Create Dictionary
-    ...    fleet_owner=Fleet Owner
-    ...    driver=Driver
-    ...    single_owner=Single Owner
-    ${label}=    Get From Dictionary    ${labels}    ${persona}
-    RETURN    ${label}
-
 Complete Role Selection For Persona If Shown
+    [Documentation]    On role screen, selects the card matching ``persona`` from Credentials.csv.
     [Arguments]    ${persona}
-    ${en}=    Run Keyword And Return Status    Wait Until Page Contains    Select your account type    15s
-    IF    not ${en}
-        ${ar}=    Run Keyword And Return Status    Wait Until Page Contains    اختار نوع حسابك    5s
-        IF    not ${ar}
-            RETURN
-        END
+    ${shown}=    Run Keyword And Return Status    Wait For Any Locator    @{ROLE_TITLE_LOCATORS}    timeout=15s
+    IF    not ${shown}
+        RETURN
     END
-    IF    '${persona}' == 'fleet_owner'
-        Select Fleet Owner Role And Confirm
-    ELSE
-        ${role_label}=    Get Role Label For Persona    ${persona}
-        Select Role And Confirm    ${role_label}
-    END
+    Select Role For Persona And Confirm    ${persona}
 
 Complete Registration After Otp For Persona
     [Documentation]    Post-OTP: Terms → Role → Name (each skipped if already done).

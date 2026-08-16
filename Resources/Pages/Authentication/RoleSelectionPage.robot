@@ -2,6 +2,7 @@
 Documentation    Account type selection after terms (RoleSelectionScreenContent).
 Resource    ../../Common/BasePage.robot
 Resource    ../../Common/setup_teardown.robot
+Resource    ../../Common/data_manager.robot
 
 
 *** Variables ***
@@ -13,7 +14,9 @@ ${CARD_FLEET_OWNER}    xpath=//android.view.View[@clickable="true" and .//androi
 ${CARD_FLEET_OWNER_AR}    xpath=//android.view.View[@clickable="true" and .//android.widget.TextView[@text="صاحب اسطول"]]
 ${CARD_FLEET_OWNER_TAP}    xpath=//android.widget.TextView[@text="Fleet Owner"]/ancestor::android.view.View[@clickable="true"][1]
 ${CARD_FLEET_OWNER_AR_TAP}    xpath=//android.widget.TextView[@text="صاحب اسطول"]/ancestor::android.view.View[@clickable="true"][1]
+${CARD_DRIVER}    xpath=//android.view.View[@clickable="true" and .//android.widget.TextView[@text="Driver"]]
 ${CARD_DRIVER_AR}    xpath=//android.view.View[@clickable="true" and .//android.widget.TextView[@text="سائق فى اسطول"]]
+${CARD_SINGLE_OWNER}    xpath=//android.view.View[@clickable="true" and .//android.widget.TextView[@text="Single Owner"]]
 ${CARD_SINGLE_OWNER_AR}    xpath=//android.view.View[@clickable="true" and .//android.widget.TextView[@text="سائق حر"]]
 # Bottom Confirm button — disabled until a role card is selected.
 ${BTN_CONFIRM_ROLE}    xpath=//*[@text="Confirm"]/ancestor::*[@clickable="true"][1]
@@ -50,6 +53,17 @@ Select Role By Label
     ${card_tap}=    Set Variable    xpath=//android.widget.TextView[@text="${role_label}"]/ancestor::android.view.View[@clickable="true"][1]
     Tap First Ready Locator    ${card}    ${card_tap}    timeout=15s
 
+Select Role For Persona
+    [Documentation]    Taps the role card matching ``persona`` (Credentials.csv → global role labels, AR first).
+    [Arguments]    ${persona}
+    Ensure MobilCare Is Foreground
+    ${roles}=    Get Persona Role Dictionary    ${persona}
+    ${card_ar}=    Set Variable    xpath=//android.view.View[@clickable="true" and .//android.widget.TextView[@text="${roles}[ar]"]]
+    ${card_en}=    Set Variable    xpath=//android.view.View[@clickable="true" and .//android.widget.TextView[@text="${roles}[en]"]]
+    ${tap_ar}=    Set Variable    xpath=//android.widget.TextView[@text="${roles}[ar]"]/ancestor::android.view.View[@clickable="true"][1]
+    ${tap_en}=    Set Variable    xpath=//android.widget.TextView[@text="${roles}[en]"]/ancestor::android.view.View[@clickable="true"][1]
+    Tap First Ready Locator    ${card_ar}    ${tap_ar}    ${card_en}    ${tap_en}    timeout=15s
+
 Wait For Confirm Role Button Enabled
     [Documentation]    Confirm stays disabled until a role card is selected.
     Wait For Any Locator    @{CONFIRM_ROLE_ENABLED_LOCATORS}    timeout=15s
@@ -79,5 +93,13 @@ Select Role And Confirm
     [Arguments]    ${role_label}
     Role Selection Screen Should Be Visible
     Select Role By Label    ${role_label}
+    Tap Confirm On Role Selection Screen
+    Confirm Role Selection Dialog
+
+Select Role For Persona And Confirm
+    [Documentation]    Select role from ``persona``, tap Confirm, accept confirmation dialog.
+    [Arguments]    ${persona}
+    Role Selection Screen Should Be Visible
+    Select Role For Persona    ${persona}
     Tap Confirm On Role Selection Screen
     Confirm Role Selection Dialog
