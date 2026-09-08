@@ -1,9 +1,9 @@
 *** Settings ***
-Documentation    Fleet vehicles list — items, inner Vehicles tab, post-save assertions.
+Documentation    Vehicles list — inner Vehicles/Team tabs, list cards, post-save banner, open view.
 Resource    ../../Common/BasePage.robot
 Resource    ../../Common/setup_teardown.robot
 Resource    ../../Variables/global_variables.robot
-Resource    FleetTabPage.robot
+Resource    ../Fleet/FleetTabPage.robot
 
 
 *** Variables ***
@@ -29,7 +29,7 @@ Dismiss Vehicle Added Banner If Shown
     Run Keyword And Return Status    Wait Until Page Does Not Contain    ${LBL_VEHICLE_ADDED}[en]    3s
 
 Vehicles List Should Be Visible
-    [Documentation]    Fleet vehicles list after add — FAB or Vehicles / عربيات tab (not the toast overlay).
+    [Documentation]    Vehicles list after add — FAB or Vehicles / عربيات tab (not the toast overlay).
     Ensure MobilCare Is Foreground
     Dismiss Vehicle Added Banner If Shown
     Wait For Any Locator    @{FLEET_VEHICLES_LIST_LOCATORS}    timeout=30s

@@ -37,3 +37,7 @@ ${lang}            en
 &{LBL_VEHICLE_ADDED}    en=Vehicle added successfully    ar=العربية اتضافت بنجاح
 &{LBL_ADD_DRIVER_TUTORIAL_HEADER}    en=Create your own team    ar=كوّن فريقك
 &{LBL_TEAM_TAB_TUTORIAL_HEADER}    en=Add Team Members    ar=ضيف فريق السواقين
+&{LBL_REFERRAL_POPUP}    en=Be Kafaa and spread Kafaa!    ar=خليك كفاءة وانشر الكفاءة!
+&{LBL_REFERRAL_REWARD}    en=Earn up to 1000 EGP    ar=اكسب لحد 1000 جنيه
+&{BTN_REFERRAL_SHARE}    en=Spread Kafaa    ar=انشر الكفاءة
+&{BTN_HOT_OFFER_VIEW_MORE}    en=View more    ar=عرض المزيد

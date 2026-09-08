@@ -5,7 +5,7 @@ Resource    LoginKeywords.robot
 Resource    ../Common/data_manager.robot
 Resource    ../Pages/Navigation/BottomNavigationPage.robot
 Resource    ../Pages/Fleet/FleetTabPage.robot
-Resource    ../Pages/Fleet/FleetVehiclesListPage.robot
+Resource    ../Pages/Vehicle/VehiclesListPage.robot
 Resource    ../Pages/Vehicle/AddVehiclePage.robot
 Resource    ../Pages/Vehicle/ViewVehiclePage.robot
 Resource    ../Pages/Common/InAppTutorialPage.robot

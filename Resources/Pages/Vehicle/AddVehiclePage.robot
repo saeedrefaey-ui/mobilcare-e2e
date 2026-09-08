@@ -5,7 +5,7 @@ Resource    ../../Common/setup_teardown.robot
 Resource    ../../Variables/global_variables.robot
 Resource    MileageDialogPage.robot
 Resource    LookupsPage.robot
-Resource    ../Fleet/FleetVehiclesListPage.robot
+Resource    VehiclesListPage.robot
 Resource    ../Common/VerifyAccountDialogPage.robot
 
 
