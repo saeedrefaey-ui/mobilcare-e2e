@@ -7,7 +7,6 @@ Resource    ../Pages/Authentication/VerificationPage.robot
 Resource    ../Pages/Home/HomePage.robot
 Resource    ../Common/language_keywords.robot
 Resource    ../Common/data_manager.robot
-Resource    PopupKeywords.robot
 
 
 *** Keywords ***
@@ -28,7 +27,6 @@ Complete Login Flow For Persona
     END
     Enter Phone Number And Tap Confirm    ${credentials}[phone]
     Complete Otp Verification    ${credentials}[phone]    ${credentials}[otp]
-    Skip Popups After Login
     Home Screen Should Be Visible For Persona    ${persona}
 
 Complete Login Flow For Persona In Arabic

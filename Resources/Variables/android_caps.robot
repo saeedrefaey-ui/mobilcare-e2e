@@ -16,4 +16,3 @@ ${ROBOT_DEVICE_NAME}    ${EMPTY}
 ...    appium:autoGrantPermissions=${TRUE}
 ...    appium:noReset=${TRUE}
 ...    appium:newCommandTimeout=300
-...    appium:settings[enforceXPath1]=${TRUE}

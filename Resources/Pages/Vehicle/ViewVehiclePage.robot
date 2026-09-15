@@ -7,7 +7,7 @@ Resource    MileageDialogPage.robot
 
 
 *** Variables ***
-${BTN_VIEW_MILEAGE_FIELD}    ${BTN_MILEAGE_FIELD}
+${BTN_MILEAGE_FIELD}    xpath=//android.widget.TextView[@text="${LBL_CURRENT_MILEAGE}[en]" or @text="${LBL_CURRENT_MILEAGE}[ar]"]/ancestor::*[@clickable="true"][1]
 
 
 *** Keywords ***
@@ -16,19 +16,12 @@ View Vehicle Screen Should Be Visible For Plate
     [Arguments]    ${license_plate}
     Ensure MobilCare Is Foreground
     Wait Until Page Contains    ${license_plate}    30s
-    Wait For Any Locator    ${BTN_VIEW_MILEAGE_FIELD}    timeout=15s
-
-View Vehicle Data Should Match
-    [Documentation]    Asserts plate, mileage, brand, and type on the view-vehicle screen.
-    [Arguments]    ${license_plate}    ${mileage}    ${brand_name}    ${type_name}
-    View Vehicle Screen Should Be Visible For Plate    ${license_plate}
-    Wait Until Page Contains    ${mileage}    15s
-    Wait Until Page Contains    ${brand_name}    15s
-    Wait Until Page Contains    ${type_name}    15s
+    Wait For Any Locator    ${BTN_MILEAGE_FIELD}    timeout=15s
 
 Open Mileage Field On View Vehicle
-    [Documentation]    Taps odometer on view-vehicle to open update modal.
-    Open Mileage Dialog From Field
+    [Documentation]    Taps current mileage on view-vehicle to open update modal.
+    Tap When Ready    ${BTN_MILEAGE_FIELD}    10s
+    Mileage Dialog Should Be Visible
 
 Update Mileage On View Vehicle
     [Documentation]    Opens mileage modal, enters value, confirms.
