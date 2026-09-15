@@ -1,6 +1,7 @@
 *** Settings ***
 Documentation    Load test data from CSV under Utilities/Data/.
 Library    Collections
+Library    DateTime
 Library    ../../Libraries/CSV.py
 Resource    ../Variables/global_variables.robot
 
@@ -67,10 +68,20 @@ Load Persona Credentials
     ...    display_name=${display_name}
     RETURN    ${credentials}
 
+Generate Unique License Plate
+    [Documentation]    AUT + day/time so each run uses a new vehicle name (e.g. AUT06005612).
+    ${stamp}=    Get Current Date    result_format=%d%H%M%S
+    ${plate}=    Set Variable    AUT${stamp}
+    RETURN    ${plate}
+
 Load Vehicle Test Data
-    [Documentation]    Returns vehicle row from Vehicles.csv for ``vehicle_key`` (default: default).
+    [Documentation]    Vehicle row from Vehicles.csv; license_plate is replaced with a unique value each call.
     [Arguments]    ${vehicle_key}=default
     ${row}=    Get Row By Column    ${VEHICLES_FILE}    vehicle_key    ${vehicle_key}
+    ${row}=    Copy Dictionary    ${row}
+    ${plate}=    Generate Unique License Plate
+    Set To Dictionary    ${row}    license_plate=${plate}
+    Log    Using unique license plate: ${plate}
     RETURN    ${row}
 
 Get Vehicle Field
