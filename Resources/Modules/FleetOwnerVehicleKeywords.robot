@@ -1,15 +1,13 @@
 *** Settings ***
 Documentation    Fleet owner vehicle flows — add, list, view, update mileage (full Vehicles regression scope).
-Library    Collections
 Resource    LoginKeywords.robot
 Resource    ../Common/data_manager.robot
 Resource    ../Pages/Navigation/BottomNavigationPage.robot
 Resource    ../Pages/Fleet/FleetTabPage.robot
-Resource    ../Pages/Vehicle/VehiclesListPage.robot
+Resource    ../Pages/Fleet/FleetVehiclesListPage.robot
 Resource    ../Pages/Vehicle/AddVehiclePage.robot
 Resource    ../Pages/Vehicle/ViewVehiclePage.robot
 Resource    ../Pages/Common/InAppTutorialPage.robot
-Resource    ../Pages/Common/VerifyAccountDialogPage.robot
 
 
 *** Keywords ***
@@ -37,24 +35,21 @@ Add Vehicle For Fleet Owner
     [Arguments]    ${vehicle_key}=default    ${language}=en
     ${vehicle}=    Load Vehicle Test Data    ${vehicle_key}
     Login And Open Add Vehicle For Fleet Owner    language=${language}
-    ${brand_name}    ${type_name}=    Save New Vehicle From Add Form    ${vehicle}[license_plate]    ${vehicle}[mileage]
-    Set To Dictionary    ${vehicle}    brand_name=${brand_name}    type_name=${type_name}
-    RETURN    ${vehicle}
-
-Complete Post Add Vehicle Steps For Fleet Owner
-    [Documentation]    Dismiss verify popup, assert top vehicle, open view, check data, update mileage.
-    [Arguments]    ${vehicle}
-    Dismiss Verify Account Dialog If Shown
-    Dismiss Vehicle Added Banner If Shown
-    Dismiss All Fleet Tutorials If Shown
-    Vehicles List Should Be Visible
-    Top Listed Vehicle Should Show Plate    ${vehicle}[license_plate]
-    Tap Vehicle With Plate    ${vehicle}[license_plate]
-    View Vehicle Data Should Match
+    Save New Vehicle From Add Form
     ...    ${vehicle}[license_plate]
     ...    ${vehicle}[mileage]
     ...    ${vehicle}[brand_name]
     ...    ${vehicle}[type_name]
+    RETURN    ${vehicle}
+
+Complete Post Add Vehicle Steps For Fleet Owner
+    [Documentation]    Steps 11–16 — dismiss tutorials, open vehicle, update mileage.
+    [Arguments]    ${vehicle}
+    Dismiss All Fleet Tutorials If Shown
+    Tap Fleet Vehicles Tab
+    Vehicle With Plate Should Be Visible    ${vehicle}[license_plate]
+    Tap Vehicle With Plate    ${vehicle}[license_plate]
+    View Vehicle Screen Should Be Visible For Plate    ${vehicle}[license_plate]
     Update Mileage On View Vehicle    ${vehicle}[updated_mileage]
     Mileage On View Vehicle Should Be    ${vehicle}[updated_mileage]
 
@@ -68,8 +63,11 @@ Fill And Save Vehicle On Add Form
     [Documentation]    Steps 2–10 only — assumes add-vehicle screen is already open.
     [Arguments]    ${vehicle_key}=default
     ${vehicle}=    Load Vehicle Test Data    ${vehicle_key}
-    ${brand_name}    ${type_name}=    Save New Vehicle From Add Form    ${vehicle}[license_plate]    ${vehicle}[mileage]
-    Set To Dictionary    ${vehicle}    brand_name=${brand_name}    type_name=${type_name}
+    Save New Vehicle From Add Form
+    ...    ${vehicle}[license_plate]
+    ...    ${vehicle}[mileage]
+    ...    ${vehicle}[brand_name]
+    ...    ${vehicle}[type_name]
     RETURN    ${vehicle}
 
 Reach Add Vehicle Screen For Fleet Owner

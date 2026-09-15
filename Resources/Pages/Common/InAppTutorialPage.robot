@@ -14,15 +14,16 @@ ${LBL_TEAM_TAB_TUTORIAL}    xpath=//android.widget.TextView[contains(@text,"${LB
 *** Keywords ***
 Dismiss Spotlight Tutorial If Shown
     [Documentation]    Taps Skip / تخطى when an in-app tutorial overlay is visible.
-    ${shown}=    Run Keyword And Return Status    Wait Until Page Contains Element    ${BTN_SKIP_TUTORIAL}    2s
+    ${shown}=    Run Keyword And Return Status    Wait Until Page Contains Element    ${BTN_SKIP_TUTORIAL}    5s
     IF    ${shown}
         Tap When Ready    ${BTN_SKIP_TUTORIAL}    5s
     END
 
 Dismiss All Fleet Tutorials If Shown
-    [Documentation]    Dismisses team-tab and add-driver spotlight tutorials if Skip is already on screen.
-    FOR    ${i}    IN RANGE    2
+    [Documentation]    Dismisses team-tab and add-driver spotlight tutorials (may appear after first vehicle).
+    FOR    ${i}    IN RANGE    3
         Dismiss Spotlight Tutorial If Shown
+        Sleep    1s
     END
 
 Add Driver Tutorial Should Be Visible
