@@ -1,4 +1,4 @@
-*** Settings ***
+*** Settings ***    # robot -v APP_PACKAGE:com.trianglz.mobil_care.stg Tests/Driver/leave_team.robot
 Documentation    Driver Leave His Team.
 Library    Process
 Suite Setup       Begin All Tests
@@ -8,7 +8,6 @@ Resource    ../../Resources/Modules/ProfileKeywords.robot
 
 
 *** Variables ***
-
 
 *** Test Cases ***
 Verify Driver left the team
