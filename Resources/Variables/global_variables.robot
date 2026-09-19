@@ -3,7 +3,7 @@ Documentation    App identity, language, and bilingual UI strings for MobilCare 
 
 
 *** Variables ***
-${APP_PACKAGE}     com.trianglz.mobil_care.dev
+${APP_PACKAGE}     com.trianglz.mobil_care.stg
 ${APP_ACTIVITY}    com.trianglz.splash.modules.splash.presentation.SplashActivity
 ${lang}            en
 

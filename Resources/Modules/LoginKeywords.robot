@@ -18,8 +18,8 @@ Reach Login Screen
 
 Complete Login Flow For Persona
     [Documentation]    Login for an already-registered ``persona`` (fleet_owner, driver, single_owner).
-    ...    Same steps as registration up to OTP; skips terms, role, and name; asserts persona home.
-    [Arguments]    ${persona}    ${language}=en
+    ...    Same steps as registration up to OTP; skips terms, role, and name; optionally asserts persona home.
+    [Arguments]    ${persona}    ${language}=en    ${assert_home}=${True}
     ${credentials}=    Load Persona Credentials    ${persona}
     Reach Login Screen
     IF    '${language}' == 'ar'
@@ -27,7 +27,9 @@ Complete Login Flow For Persona
     END
     Enter Phone Number And Tap Confirm    ${credentials}[phone]
     Complete Otp Verification    ${credentials}[phone]    ${credentials}[otp]
-    Home Screen Should Be Visible For Persona    ${persona}
+    IF    ${assert_home}
+        Home Screen Should Be Visible For Persona    ${persona}
+    END
 
 Complete Login Flow For Persona In Arabic
     [Documentation]    Shortcut — Arabic UI login path to persona home.
@@ -36,8 +38,8 @@ Complete Login Flow For Persona In Arabic
 
 Login As Persona
     [Documentation]    Alias for ``Complete Login Flow For Persona``.
-    [Arguments]    ${persona}    ${language}=en
-    Complete Login Flow For Persona    ${persona}    language=${language}
+    [Arguments]    ${persona}    ${language}=en    ${assert_home}=${True}
+    Complete Login Flow For Persona    ${persona}    language=${language}    assert_home=${assert_home}
 
 Login As Persona In Arabic
     [Documentation]    Alias for ``Complete Login Flow For Persona In Arabic``.

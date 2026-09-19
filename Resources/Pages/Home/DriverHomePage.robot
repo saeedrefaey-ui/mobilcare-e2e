@@ -7,6 +7,8 @@ Resource    ../../Common/setup_teardown.robot
 *** Variables ***
 ${BTN_START_TRIP}    -android uiautomator:new UiSelector().text("Start your trip")
 ${LBL_INVITATIONS_EMPTY}    -android uiautomator:new UiSelector().textContains("invitation")
+${PROFILE_ICON}    -android uiautomator:new UiSelector().className("android.view.View").instance(18)
+
 
 
 *** Keywords ***
@@ -16,3 +18,5 @@ Driver Home Should Be Visible
     IF    not ${trip}
         Wait Until Element Is Ready    ${LBL_INVITATIONS_EMPTY}    15s
     END
+
+ 

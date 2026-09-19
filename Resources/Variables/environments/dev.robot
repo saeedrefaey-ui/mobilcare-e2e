@@ -1,2 +1,2 @@
 *** Variables ***
-${APP_PACKAGE}    com.trianglz.mobil_care.dev
+${APP_PACKAGE}    com.trianglz.mobil_care.stg

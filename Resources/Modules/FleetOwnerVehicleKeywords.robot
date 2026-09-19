@@ -1,4 +1,4 @@
-*** Settings ***
+*** Settings *** 
 Documentation    Fleet owner vehicle flows — add, list, view, update mileage (full Vehicles regression scope).
 Resource    LoginKeywords.robot
 Resource    ../Common/data_manager.robot
